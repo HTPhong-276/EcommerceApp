@@ -19,10 +19,20 @@ namespace Repository.Implements
             this.context = context;
         }
 
+        public void add(T entity)
+        {
+            context.Set<T>().Add(entity);
+        }
+
         public async Task<int> CountAsync(ISpecification<T> specification)
         {
             return await ApplySpecification(specification)
                 .CountAsync();
+        }
+
+        public void Delete(T entity)
+        {
+            context.Set<T>().Remove(entity);
         }
 
         public async Task<T> GetByIdAsync(int id)
@@ -45,6 +55,12 @@ namespace Repository.Implements
         {
             return await ApplySpecification(specification)
                 .ToListAsync();
+        }
+
+        public void update(T entity)
+        {
+            context.Set<T>().Attach(entity);
+            context.Entry(entity).State = EntityState.Modified;
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
