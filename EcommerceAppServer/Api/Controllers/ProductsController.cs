@@ -1,4 +1,5 @@
 ﻿using Api.Dtos;
+using Api.Errors;
 using Api.Helpers;
 using AutoMapper;
 using Domain.Entity;
@@ -29,6 +30,9 @@ namespace Api.Controllers
             this.mapper = mapper;
         }
 
+        [Cached(600)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [HttpGet("GetById/{id}")]
         public async Task<ActionResult<ProductToReturnDto>> GetById(int id)
         {
@@ -38,6 +42,7 @@ namespace Api.Controllers
             return mapper.Map<Product, ProductToReturnDto>(product);
         }
 
+        [Cached(600)]
         [HttpGet("GetAll")]
         public async Task<ActionResult<Pagination<Product>>> GetAll(
             [FromQuery] ProductSpecParams productParams)

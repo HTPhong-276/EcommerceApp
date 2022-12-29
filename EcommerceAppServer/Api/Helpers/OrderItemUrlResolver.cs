@@ -17,7 +17,7 @@ namespace Api.Helpers
         {
             if (!string.IsNullOrEmpty(source.ItemOrdered.PictureUrl))
             {
-                return configuration["ApiUrl"] + source.ItemOrdered.PictureUrl();
+                return configuration["ApiUrl"] + source.ItemOrdered.PictureUrl;
             }
 
             return null;
